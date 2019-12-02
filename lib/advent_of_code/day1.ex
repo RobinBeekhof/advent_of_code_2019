@@ -1,5 +1,4 @@
-defmodule Adventocode.Day1 do
-
+defmodule AdventOfCode.Day1 do
   def exercise1 do
     File.stream!("lib/resources/input_dec1_1.txt")
     |> Enum.to_list
