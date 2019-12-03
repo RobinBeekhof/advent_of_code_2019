@@ -8,6 +8,25 @@ defmodule AdventOfCode.Day2 do
     |> Enum.map(&String.replace(&1,"\n","")|> String.to_integer)
   end
 
+  def proccesIntCode(intCode, [head|tail]) do
+
+  end
+
+  def proccesIntCode(intCode, {status,code}) when status == :stop, do:  intCode
+
+  def proccesIntCode(intCode, {status,code}) do
+    calculateOpCode
+
+  end
+
+
+
+
+
+
+
+
+
 
 
   @doc """
