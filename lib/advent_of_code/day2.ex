@@ -1,64 +1,111 @@
 defmodule AdventOfCode.Day2 do
 
+  def exercise1 do
+    retriveMemory()
+    |> restore1202
+    |> runIntCodeProgram
+    |> getMemoryAddress(0)
+  end
 
-  def retriveIntCode do
-    {_,intCodeString} = File.read("lib/resources/input_dec2.txt")
-    intCodeString
+  def getMemoryAddress(memory,pos) do
+    memory
+    |> Enum.at(pos)
+  end
+
+  def retriveMemory do
+    {_,memoryString} = File.read("lib/resources/input_dec2.txt")
+    memoryString
     |> String.split(",")
     |> Enum.map(&String.replace(&1,"\n","")|> String.to_integer)
   end
 
-  def proccesIntCode(intCode, [head|tail]) do
+  @doc """
+  restore the gravity assist program (your puzzle input) to the "1202 program alarm"
+  state it had just before the last computer caught fire.
 
+  ## Examples
+  iex> AdventOfCode.Day2.restore1202([1,0,0,0,99])
+  [1,12,2,0,99]
+  """
+  def restore1202(memory) do
+    memory
+    |> updateMemoryAddress(1,12)
+    |> updateMemoryAddress(2,2)
   end
 
-  def proccesIntCode(intCode, {status,code}) when status == :stop, do:  intCode
-
-  def proccesIntCode(intCode, {status,code}) do
-    calculateOpCode
-
+  def updateMemoryAddress(memory, pos, value) do
+    memory
+    |> Enum.with_index(0)
+    |> Enum.map(fn {k,v}->{v,k} end)
+    |> Map.new
+    |> Map.put(pos,value)
+    |> Enum.to_list
+    |> Enum.sort(fn({key1, _value1}, {key2, _value2}) -> key1 < key2 end)
+    |> Enum.map(fn({_key, value}) -> value  end)
   end
 
 
+  @doc """
+  running the IntCode program
+  
+  ## Examples
+  iex> AdventOfCode.Day2.runIntCodeProgram([1,0,0,0,99])
+  [2,0,0,0,99]
+  iex> AdventOfCode.Day2.runIntCodeProgram([2,3,0,3,99])
+  [2,3,0,6,99]
+  iex> AdventOfCode.Day2.runIntCodeProgram([2,4,4,5,99,0])
+  [2,4,4,5,99,9801]
+  iex> AdventOfCode.Day2.runIntCodeProgram([1,1,1,4,99,5,6,0,99])
+  [30,1,1,4,2,5,6,0,99]
+  """
+  def runIntCodeProgram(memory), do: runIntCodeProgram(memory,0)
 
+  def runIntCodeProgram(memory, pointer) do
+    instructions = memory
+              |>Enum.chunk_every(4,4,[0,0,0])
+              |> Enum.with_index(0)
+              |> Enum.map(fn {k,v}->{v,k} end)
+              |> Map.new
 
+    {status,value,pos} = runInstruction(memory,instructions[pointer])
 
-
-
-
-
-
+    case status do
+      :stop -> memory
+      :error -> IO.puts("something went wrong!!")
+      :ok -> runIntCodeProgram(updateMemoryAddress(memory,pos,value), pointer + 1)
+    end
+  end
 
   @doc """
   calculate opcode
 
   ## Examples
-  iex> intCode = [1,9,10,3,2,3,11,0,99,30,40,50]
+  iex> memory = [1,9,10,3,2,3,11,0,99,30,40,50]
   iex> opCode = [1,9,10,3]
-  iex> {_,[_,_,_,result]} = AdventOfCode.Day2.calculateOpCode(intCode,opCode)
+  iex> {_,result,_} = AdventOfCode.Day2.runInstruction(memory,opCode)
   iex> result
   70
 
-  iex> intCode = [1,9,10,70,2,3,11,0,99,30,40,50]
+  iex> memory = [1,9,10,70,2,3,11,0,99,30,40,50]
   iex> opCode = [2,3,11,0]
-  iex> {_,[_,_,_,result]} = AdventOfCode.Day2.calculateOpCode(intCode,opCode)
+  iex> {_,result,_} = AdventOfCode.Day2.runInstruction(memory,opCode)
   iex> result
   3500
 
-  iex> intCode = [1,9,10,70,2,3,11,3500,99,30,40,50]
+  iex> memory = [1,9,10,70,2,3,11,3500,99,30,40,50]
   iex> opCode = [99,30,40,50]
-  iex> {status,[_,_,_,_]} = AdventOfCode.Day2.calculateOpCode(intCode,opCode)
+  iex> {status,_,_} = AdventOfCode.Day2.runInstruction(memory,opCode)
   iex> status
   :stop
 
 
   """
-  def calculateOpCode(intCode, [pos0,pos1,pos2,pos3]) do
-    case pos0 do
-      1 -> {:ok, [pos0,pos1,pos2,Enum.at(intCode,pos1) + Enum.at(intCode,pos2)]}
-      2 -> {:ok, [pos0,pos1,pos2,Enum.at(intCode,pos1) * Enum.at(intCode,pos2)]}
-      99 -> {:stop, [pos0,pos1,pos2,pos3]}
-      _ -> {:error, [pos0,pos1,pos2,pos3]}
+  def runInstruction(memory,[opCode,param1,param2,param3]) do
+    case opCode do
+      1 -> {:ok, Enum.at(memory,param1) + Enum.at(memory,param2), param3}
+      2 -> {:ok, Enum.at(memory,param1) * Enum.at(memory,param2), param3}
+      99 -> {:stop,0,0}
+      _ -> {:error,0,0}
     end
   end
 
