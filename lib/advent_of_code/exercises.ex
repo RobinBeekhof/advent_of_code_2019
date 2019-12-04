@@ -2,6 +2,7 @@ defmodule AdventOfCode.Exercises do
   @moduledoc false
   import AdventOfCode.IntCodeProgram
   import AdventOfCode.Day3
+  import AdventOfCode.Day4
 
   @doc """
   Day 2 exercise 1
@@ -19,9 +20,9 @@ defmodule AdventOfCode.Exercises do
 
   @doc """
   Day 3 exercise 1
-  ## Examples
-  iex> AdventOfCode.Exercises.day3_exercise1
-  0
+#  ## Examples
+#  iex> AdventOfCode.Exercises.day3_exercise1
+#  [870, {870, 0}]
   """
 
   def day3_exercise1 do
@@ -32,6 +33,19 @@ defmodule AdventOfCode.Exercises do
     |> Enum.map(&Enum.drop(&1,1))
     |> findDistToClosestIntersection
 
+  end
+
+  @doc """
+  Day 2 exercise 1
+  ## Examples
+  iex> AdventOfCode.Exercises.day4_exercise1
+  0
+  """
+
+  def day4_exercise1 do
+    109165..576723
+    |> findPossiblePassWordsInRange
+    |> Enum.count
   end
 
 
