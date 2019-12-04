@@ -18,12 +18,12 @@ defmodule AdventOfCode.Exercises do
     |> getMemoryAddress(0)
   end
 
-  @doc """
-  Day 3 exercise 1
+#  @doc """
+#  Day 3 exercise 1
 #  ## Examples
 #  iex> AdventOfCode.Exercises.day3_exercise1
 #  [870, {870, 0}]
-  """
+#  """
 
   def day3_exercise1 do
     retrivePaths()
@@ -39,7 +39,7 @@ defmodule AdventOfCode.Exercises do
   Day 2 exercise 1
   ## Examples
   iex> AdventOfCode.Exercises.day4_exercise1
-  0
+  1991
   """
 
   def day4_exercise1 do
