@@ -1,11 +1,8 @@
-defmodule AdventOfCode.Day2 do
+defmodule AdventOfCode.IntCodeProgram do
 
-  def exercise1 do
-    retriveMemory()
-    |> restore1202
-    |> runIntCodeProgram
-    |> getMemoryAddress(0)
-  end
+#  def findNounAndVerb(targetOutput) do
+#
+#  end
 
   def getMemoryAddress(memory,pos) do
     memory
@@ -24,7 +21,7 @@ defmodule AdventOfCode.Day2 do
   state it had just before the last computer caught fire.
 
   ## Examples
-  iex> AdventOfCode.Day2.restore1202([1,0,0,0,99])
+  iex> AdventOfCode.IntCodeProgram.restore1202([1,0,0,0,99])
   [1,12,2,0,99]
   """
   def restore1202(memory) do
@@ -47,15 +44,15 @@ defmodule AdventOfCode.Day2 do
 
   @doc """
   running the IntCode program
-  
+
   ## Examples
-  iex> AdventOfCode.Day2.runIntCodeProgram([1,0,0,0,99])
+  iex> AdventOfCode.IntCodeProgram.runIntCodeProgram([1,0,0,0,99])
   [2,0,0,0,99]
-  iex> AdventOfCode.Day2.runIntCodeProgram([2,3,0,3,99])
+  iex> AdventOfCode.IntCodeProgram.runIntCodeProgram([2,3,0,3,99])
   [2,3,0,6,99]
-  iex> AdventOfCode.Day2.runIntCodeProgram([2,4,4,5,99,0])
+  iex> AdventOfCode.IntCodeProgram.runIntCodeProgram([2,4,4,5,99,0])
   [2,4,4,5,99,9801]
-  iex> AdventOfCode.Day2.runIntCodeProgram([1,1,1,4,99,5,6,0,99])
+  iex> AdventOfCode.IntCodeProgram.runIntCodeProgram([1,1,1,4,99,5,6,0,99])
   [30,1,1,4,2,5,6,0,99]
   """
   def runIntCodeProgram(memory), do: runIntCodeProgram(memory,0)
@@ -82,19 +79,19 @@ defmodule AdventOfCode.Day2 do
   ## Examples
   iex> memory = [1,9,10,3,2,3,11,0,99,30,40,50]
   iex> opCode = [1,9,10,3]
-  iex> {_,result,_} = AdventOfCode.Day2.runInstruction(memory,opCode)
+  iex> {_,result,_} = AdventOfCode.IntCodeProgram.runInstruction(memory,opCode)
   iex> result
   70
 
   iex> memory = [1,9,10,70,2,3,11,0,99,30,40,50]
   iex> opCode = [2,3,11,0]
-  iex> {_,result,_} = AdventOfCode.Day2.runInstruction(memory,opCode)
+  iex> {_,result,_} = AdventOfCode.IntCodeProgram.runInstruction(memory,opCode)
   iex> result
   3500
 
   iex> memory = [1,9,10,70,2,3,11,3500,99,30,40,50]
   iex> opCode = [99,30,40,50]
-  iex> {status,_,_} = AdventOfCode.Day2.runInstruction(memory,opCode)
+  iex> {status,_,_} = AdventOfCode.IntCodeProgram.runInstruction(memory,opCode)
   iex> status
   :stop
 
