@@ -67,9 +67,10 @@ defmodule AdventOfCode.IntCodeProgram do
     {status,value,pos} = runInstruction(memory,instructions[pointer])
 
     case status do
+      :continue -> runIntCodeProgram(updateMemoryAddress(memory,pos,value), pointer + 1)
+      :
       :stop -> memory
       :error -> IO.puts("something went wrong!!")
-      :ok -> runIntCodeProgram(updateMemoryAddress(memory,pos,value), pointer + 1)
     end
   end
 

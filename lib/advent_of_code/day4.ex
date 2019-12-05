@@ -32,6 +32,7 @@ defmodule AdventOfCode.Day4 do
                           |> onlyTwins?
   end
 
+
   defp equalOrHigher?([d1 | [d2 | _]]) when d1 > d2, do: false
   defp equalOrHigher?([_ | tail]), do: equalOrHigher?(tail)
   defp equalOrHigher?([]), do: true
