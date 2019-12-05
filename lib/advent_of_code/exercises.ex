@@ -24,16 +24,16 @@ defmodule AdventOfCode.Exercises do
 #  iex> AdventOfCode.Exercises.day3_exercise1
 #  [870, {870, 0}]
 #  """
-
-  def day3_exercise1 do
-    retrivePaths()
-    |> Enum.map(&calcCoords(&1))
-    |> Enum.map(&Enum.concat(&1))
-    |> Enum.map(&sortCoordsByDistance(&1))
-    |> Enum.map(&Enum.drop(&1,1))
-    |> findDistToClosestIntersection
-
-  end
+#
+#  def day3_exercise1 do
+#    retrivePaths()
+#    |> Enum.map(&getCoords(&1))
+#    |> Enum.map(&Enum.concat(&1))
+#    |> Enum.map(&sortCoordsByDistance(&1))
+#    |> Enum.map(&Enum.drop(&1,1))
+#    |> findDistToClosestIntersection
+#
+#  end
 
   @doc """
   Day 2 exercise 1
