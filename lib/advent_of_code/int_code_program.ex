@@ -55,20 +55,20 @@ defmodule AdventOfCode.IntCodeProgram do
   iex> AdventOfCode.IntCodeProgram.runIntCodeProgram([1,1,1,4,99,5,6,0,99])
   [30,1,1,4,2,5,6,0,99]
   """
-  def runIntCodeProgram(memory), do: runIntCodeProgram(memory,0)
+  def runIntCodeProgram(memory,input \\ 0), do: runIntCodeProgram(memory,input,0)
 
-  def runIntCodeProgram(memory, pointer) do
+  def runIntCodeProgram(memory, input, pointer) do
     instructions = memory
               |>Enum.chunk_every(4,4,[0,0,0])
               |> Enum.with_index(0)
               |> Enum.map(fn {k,v}->{v,k} end)
               |> Map.new
 
-    {status,value,pos} = runInstruction(memory,instructions[pointer])
+    {status,value,pos} = runInstruction(memory,instructions[pointer],input)
 
     case status do
-      :continue -> runIntCodeProgram(updateMemoryAddress(memory,pos,value), pointer + 1)
-      :
+      :continue -> runIntCodeProgram(updateMemoryAddress(memory,pos,value), pointer + 1, input)
+      :output -> value
       :stop -> memory
       :error -> IO.puts("something went wrong!!")
     end
@@ -98,14 +98,15 @@ defmodule AdventOfCode.IntCodeProgram do
 
 
   """
-  def runInstruction(memory,[opCode,param1,param2,param3]) do
+  def runInstruction(memory,[opCode,param1,param2,param3],input) do
     case opCode do
-      1 -> {:ok, Enum.at(memory,param1) + Enum.at(memory,param2), param3}
-      2 -> {:ok, Enum.at(memory,param1) * Enum.at(memory,param2), param3}
+      1 -> {:continue, Enum.at(memory,param1) + Enum.at(memory,param2), param3}
+      2 -> {:continue, Enum.at(memory,param1) * Enum.at(memory,param2), param3}
+      3 -> {:continue,input,param1}
+      4 -> {:output,Enum.at(memory,param1) ,0}
       99 -> {:stop,0,0}
       _ -> {:error,0,0}
     end
   end
-
 
 end
