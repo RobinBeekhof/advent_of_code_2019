@@ -6,9 +6,9 @@ defmodule AdventOfCode.Exercises do
 
   @doc """
   Day 2 exercise 1
-  ## Examples
-  iex> AdventOfCode.Exercises.day2_exercise1
-  3654868
+  #  ## Examples
+  #  iex> AdventOfCode.Exercises.day2_exercise1
+  #  3654868
   """
 
   def day2_exercise1 do

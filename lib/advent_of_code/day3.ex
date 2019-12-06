@@ -49,33 +49,33 @@ defmodule AdventOfCode.Day3 do
   end
   def calculateManhattanDistance({x, y}), do: abs(x) + abs(y)
 
-  @doc """
-  ## Examples
-      iex> paths = [["R8","U5","L5","D3"],["U7","R6","D4","L4"]]
-      iex> paths
-      ...> |> Enum.map(&AdventOfCode.Day3.proccesDirections(&1))
-      ...> |> AdventOfCode.Day3.findIntersections
-      [{3, 3}, {6, 5}]
-
-  """
-  def findIntersections([path1Coords, path2Coords]) do
-    path1CoordsMapSet = path1Coords
-                        |> MapSet.new
-    path2CoordsMapSet = path2Coords
-                        |> MapSet.new
-    intersections = MapSet.intersection(path1CoordsMapSet, path2CoordsMapSet)
-                    |> MapSet.to_list
-
-    path1Steps = path1Coords
-                 |> Enum.with_index(0)
-                 |> Map.new
-
-    path2Steps = path2Coords
-                 |> Enum.with_index(0)
-                 |> Map.new
-
-    intersections
-    |> Enum.map(&({&1,Map.get }))
-  end
+#  @doc """
+#  ## Examples
+#      iex> paths = [["R8","U5","L5","D3"],["U7","R6","D4","L4"]]
+#      iex> paths
+#      ...> |> Enum.map(&AdventOfCode.Day3.proccesDirections(&1))
+#      ...> |> AdventOfCode.Day3.findIntersections
+#      [{3, 3}, {6, 5}]
+#
+#  """
+#  def findIntersections([path1Coords, path2Coords]) do
+#    path1CoordsMapSet = path1Coords
+#                        |> MapSet.new
+#    path2CoordsMapSet = path2Coords
+#                        |> MapSet.new
+#    intersections = MapSet.intersection(path1CoordsMapSet, path2CoordsMapSet)
+#                    |> MapSet.to_list
+#
+#    path1Steps = path1Coords
+#                 |> Enum.with_index(0)
+#                 |> Map.new
+#
+#    path2Steps = path2Coords
+#                 |> Enum.with_index(0)
+#                 |> Map.new
+#
+#    intersections
+#    |> Enum.map(&({&1,Map.get }))
+#  end
 
 end
