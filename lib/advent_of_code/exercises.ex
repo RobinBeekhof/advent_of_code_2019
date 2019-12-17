@@ -6,13 +6,13 @@ defmodule AdventOfCode.Exercises do
 
   @doc """
   Day 2 exercise 1
-  #  ## Examples
-  #  iex> AdventOfCode.Exercises.day2_exercise1
-  #  3654868
+    ## Examples
+    iex> AdventOfCode.Exercises.day2_exercise1
+    3654868
   """
-
+  @day2_exercise1_intcode_file "lib/resources/input_dec2.txt"
   def day2_exercise1 do
-    retriveMemory()
+    loadIntCodeProgram(@day2_exercise1_intcode_file)
     |> restore1202
     |> runIntCodeProgram
     |> getMemoryAddress(0)
@@ -36,17 +36,32 @@ defmodule AdventOfCode.Exercises do
 #  end
 
   @doc """
-  Day 2 exercise 1
+  Day 4 exercise 2
   ## Examples
-  iex> AdventOfCode.Exercises.day4_exercise1
+  iex> AdventOfCode.Exercises.day4_exercise2
   1991
   """
 
-  def day4_exercise1 do
+  def day4_exercise2 do
     109165..576723
     |> findPossiblePassWordsInRange
     |> Enum.count
   end
+
+  @doc """
+  Day 5 exercise 1
+  ## Examples
+#  iex> AdventOfCode.Exercises.day5_exercise1
+#  1991
+  """
+
+  @day5_exercise1_intcode_file "lib/resources/input_dec5.txt"
+  def day5_exercise1 do
+    loadIntCodeProgram(@day5_exercise1_intcode_file)
+    |> Enum.count
+#    |> runIntCodeProgram(1)
+  end
+
 
 
 end
