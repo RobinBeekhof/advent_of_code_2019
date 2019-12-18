@@ -1,7 +1,7 @@
 defmodule AdventOfCode.Exercises do
   @moduledoc false
   import AdventOfCode.IntCodeProgram
-  import AdventOfCode.Day3
+#  import AdventOfCode.Day3
   import AdventOfCode.Day4
 
   @doc """
@@ -51,15 +51,14 @@ defmodule AdventOfCode.Exercises do
   @doc """
   Day 5 exercise 1
   ## Examples
-#  iex> AdventOfCode.Exercises.day5_exercise1
-#  1991
+  iex> AdventOfCode.Exercises.day5_exercise1
+  1991
   """
 
   @day5_exercise1_intcode_file "lib/resources/input_dec5.txt"
   def day5_exercise1 do
     loadIntCodeProgram(@day5_exercise1_intcode_file)
-    |> Enum.count
-#    |> runIntCodeProgram(1)
+    |> runIntCodeProgram(1)
   end
 
 

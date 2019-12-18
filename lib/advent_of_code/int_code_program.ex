@@ -16,8 +16,12 @@ defmodule AdventOfCode.IntCodeProgram do
   {:ok, 4, {}, [1002, 4, 3, 4, 99]}
   iex> AdventOfCode.IntCodeProgram.runIntCodeProgram([104,50,99,1,0,0])
   {:ok, 2, {50}, [104,50,99,1,0,0]}
-  iex> AdventOfCode.IntCodeProgram.runIntCodeProgram([103,2,99,1,0,0],1)
-  {:ok, 2, {}, [103,2,1,1,0,0]}
+  iex> AdventOfCode.IntCodeProgram.runIntCodeProgram([103,3,99,5,0,0],1)
+  {:ok, 2, {}, [103,3,99,1,0,0]}
+  iex> AdventOfCode.IntCodeProgram.runIntCodeProgram([3,0,4,0,99],42)
+  {:ok, 4, {42}, [42, 0, 4, 0, 99]}
+  iex> AdventOfCode.IntCodeProgram.runIntCodeProgram([1101,100,-1,4,0])
+  {:ok, 4, {}, [1101, 100, -1, 4, 99]}
 
   """
 
@@ -77,11 +81,13 @@ defmodule AdventOfCode.IntCodeProgram do
         {
           :continue,
           input,
-          storeAt.(getValue.(param1, pm1)),
+          storeAt.(param1),
           increasePointerBy.(2)
         }
       4 ->
         {:output,getValue.(param1, pm1), 0, increasePointerBy.(2)}
+
+
       99 ->
         {:stop, 0, 0, 0}
       _ ->
